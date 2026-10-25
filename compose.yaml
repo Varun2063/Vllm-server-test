@@ -1,0 +1,18 @@
+services:
+  backend:
+    build: .
+    gpus: all
+    init: true
+    ports:
+      - "8000:8000"
+    environment:
+      VLLM_MAX_MODEL_LEN: "8192"
+      VLLM_GPU_MEMORY_UTILIZATION: "0.8"
+      VLLM_STARTUP_TIMEOUT: "900"
+    volumes:
+      - model-cache:/root/.cache/huggingface
+    shm_size: "1gb"
+    stop_grace_period: 60s
+
+volumes:
+  model-cache:
